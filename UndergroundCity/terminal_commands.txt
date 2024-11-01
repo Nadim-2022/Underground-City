@@ -1,0 +1,33 @@
+# Install nginx RTMSP server
+
+sudo apt install git build-essential libnginx-mod-http-rtmp
+
+or
+
+git clone https://github.com/arut/nginx-rtmp-module.git
+sudo apt install nginx
+sudo nano /etc/nginx/nginx.conf
+rtmp {
+    server {
+        listen 1935;  # RTMP listens on this port
+        chunk_size 4096;
+
+        application live {
+            live on;
+            record off;  # Disable recording
+        }
+    }
+}
+sudo systemctl restart nginx
+
+rtmp://<your_pi_ip>/live/<your_stream_key>
+
+sudo apt update
+sudo apt install python3-venv
+
+cd ~/RTMPServer
+python3 -m venv venv  # Creates a virtual environment named 'venv'
+
+source venv/bin/activate
+
+python usingTwocamera.py "GoPro 1945" "GoPro 4516"
